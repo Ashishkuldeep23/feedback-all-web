@@ -19,6 +19,9 @@ app.get("/" , (req , res)=>{
     res.status(200).send({status : true , message : "Right request contact to Ashish on ashishkuldeep6@gmail.com this mail i'd."})
 })
 
+app.use( (req ,res) => {
+    res.status(404).send({status : false , message :`Page Not Found , Given URL ${req.url} is incorrect for this application.`})
+})
 
 
 const port = process.env.PORT || 3000
