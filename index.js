@@ -13,12 +13,12 @@ mongooose.connect( "mongodb+srv://ashishkuldeep23:RAPXp7lktCcf8jBm@cluster0.xtas
 .then( ()=>{console.log("MongoDB Connected")} )
 .catch((e)=>{console.log("Erro :-",e)})
 
-
-// app.get("/" , (req , res)=>{
-//     res.status(200).send({status : true , message : "Right request contact to Ashish on ashishkuldeep6@gmail.com this mail i'd."})
-// })
-
 app.use("/" , route)
+
+app.get("/" , (req , res)=>{
+    res.status(200).send({status : true , message : "Right request contact to Ashish on ashishkuldeep6@gmail.com this mail i'd."})
+})
+
 
 
 const port = process.env.PORT || 3000
