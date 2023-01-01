@@ -14,6 +14,9 @@ mongooose.connect( "mongodb+srv://ashishkuldeep23:RAPXp7lktCcf8jBm@cluster0.xtas
 .catch((e)=>{console.log("Erro :-",e)})
 
 
+app.use("/" , (req , res)=>{
+    res.status(200).send({status : true , message : "Right request contact to Ashish on ashishkuldeep6@gmail.com this mail i'd."})
+})
 app.use("/" , route)
 
 
