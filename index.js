@@ -1,10 +1,12 @@
 const express = require("express")
 const mongooose = require("mongoose")
+const cors = require('cors')
 
 const route = require("./src/Router/router")
 
 const app = express()
 app.use(express.json())
+app.use(cors())
 
 
 mongooose.connect( "mongodb+srv://ashishkuldeep23:RAPXp7lktCcf8jBm@cluster0.xtascce.mongodb.net/Feedback" , {
