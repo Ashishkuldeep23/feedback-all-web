@@ -63,7 +63,7 @@ module.exports.feedbackController = async function (req, res) {
         data = await next2Model.create(req.body)
     }
 
-    res.status(201).send({ status: true, message: "Data crearted successfully", data: data })
+    res.status(201).send({ status: true, message: "FeedBack crearted successfully", data: data })
 }
 
 
