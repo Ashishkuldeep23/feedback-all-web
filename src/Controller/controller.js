@@ -1,6 +1,18 @@
 const mongooose = require("mongoose")
 
 
+// // // This function will checks data is valid or not ---------->
+function isValidEntry(value) {
+
+    if (value == undefined, value == null) return false
+
+    if (typeof value == "string" && value.trim().length == 0) return false
+
+    return true
+}
+
+
+
 // // // Avilable model names are --------->
 
 const model1 = "intern"
@@ -67,12 +79,26 @@ module.exports.feedbackController = async function (req, res) {
 }
 
 
-// // // This function will checks data is valid or not ---------->
-function isValidEntry(value) {
 
-    if (value == undefined, value == null) return false
 
-    if (typeof value == "string" && value.trim().length == 0) return false
+module.exports.getFeedbackAll = async function(req ,res){
 
-    return true
+    let modelName = req.params.modelName
+
+    let listOfAllModel = [model1, model2, model3]
+    if (!listOfAllModel.includes(modelName)) { return res.status(500).send({ status: false, message: `Give Model Name(${modelName}) is Invalid.(FrontEnd Error)` }) }
+
+    let data = ''
+    if (modelName == model1) {
+        data = await InternFeedbackModel.find().select({feedbackName : 1 , feedbackType : 1 , feedbackMsg : 1 , _id : 0 }).sort({createdAt : -1})
+    }
+    if (modelName == model2) {
+        data = await nextModel.find().select({feedbackName : 1 , feedbackType : 1 , feedbackMsg : 1 , _id : 0 }).sort({createdAt : -1})
+    }
+    if (modelName == model3) {
+        data = await next2Model.find().select({feedbackName : 1 , feedbackType : 1 , feedbackMsg : 1 , _id : 0 }).sort({createdAt : -1})
+    }
+
+    res.status(201).send({ status: true, message: "All feedback are -->", data: data })
+   
 }

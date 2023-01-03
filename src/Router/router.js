@@ -1,9 +1,10 @@
 const router = require("express").Router()
 
-let {feedbackController} = require("../Controller/controller")
+let {feedbackController , getFeedbackAll} = require("../Controller/controller")
 
 router.post("/newFeedback" , feedbackController)
 
-router.get("*" , )
+router.get("/getFeedback/:modelName" , getFeedbackAll)
+
 
 module.exports = router
