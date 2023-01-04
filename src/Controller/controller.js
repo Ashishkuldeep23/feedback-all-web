@@ -31,7 +31,7 @@ const feedbackSchema = new mongooose.Schema({
 
     feedbackMsg: { type: String, required: true } ,
 
-    whenCreated : {type : String , default : moment().format('MMMM Do YYYY, h:mm:ss a')}
+    whenCreated : {type : String , default : moment().format('MMMM Do YYYY, hh:mm a')}
 
 }, { timestamps: true }
 )
