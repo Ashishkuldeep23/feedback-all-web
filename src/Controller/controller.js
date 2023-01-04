@@ -66,6 +66,9 @@ module.exports.feedbackController = async function (req, res) {
     // // // Feedback type controlled by schema if not given.
 
 
+    // // // Time according to deployed time zone (utcoffset() is give time acc. to time zone , so we will set is on indian time zone by "+05:30" ) ------------>
+    req.body.whenCreated = moment().utcOffset("+05:30").format('MMMM Do YY, hh:mm a')
+
     // // // Var to store output of creation -->
     let data = ''
     if (modelName == model1) {
@@ -78,7 +81,7 @@ module.exports.feedbackController = async function (req, res) {
         data = await next2Model.create(req.body)
     }
 
-    res.status(201).send({ status: true, message: "FeedBack crearted successfully", data: data })
+    res.status(201).send({ status: true, message: "FeedBack crearted successfully" , data : data})
 }
 
 
