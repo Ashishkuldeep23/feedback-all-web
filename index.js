@@ -8,8 +8,10 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
+require('dotenv').config()
 
-mongooose.connect( "mongodb+srv://ashishkuldeep23:RAPXp7lktCcf8jBm@cluster0.xtascce.mongodb.net/Feedback" , {
+
+mongooose.connect( process.env.Token , {
     useNewUrlParser: true
 })
 .then( ()=>{console.log("MongoDB Connected")} )
