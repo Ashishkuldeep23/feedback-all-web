@@ -14,8 +14,9 @@ function isValidEntry(value) {
 // // //<----------------** Avilable model names are **--------->
 
 const model1 = "intern"
-const model2 = "next"
-const model3 = "next2"
+const model2 = "smallProjectsFeed"
+const model3 = "next"
+const model4 = "next2"
 
 
 // // // <-----------------------** Schema and model here **-------------------->
@@ -30,14 +31,17 @@ const feedbackSchema = new mongooose.Schema(
 
     whenCreated : {type : String , default : moment().format('MMMM Do YY, hh:mm a') ,trim : true} ,
 
+    feedFromWebName : {type : String , required : true ,trim : true } , 
+
     reply : {type : String , default : "Thank You!" ,trim : true} 
 
 }, { timestamps: true })
 
 // // // //<-----------------------** All models with one schema to seprate feedbacks **----------->
 let InternFeedbackModel = mongooose.model(model1, feedbackSchema)
-let nextModel = mongooose.model(model2, feedbackSchema)
-let next2Model = mongooose.model(model3, feedbackSchema)
+let smallProjectsModel = mongooose.model(model2, feedbackSchema)
+let nextModel = mongooose.model(model3, feedbackSchema)
+let next2Model = mongooose.model(model4, feedbackSchema)
 
 
 
@@ -53,13 +57,13 @@ module.exports.feedbackController = async function (req, res) {
     // // // Model entry checks here --->
     let modelName = req.params.modelName
     
-    let listOfAllModel = [model1, model2, model3]
+    let listOfAllModel = [model1, model2, model3 ,model4]
     if (!modelName) return res.status(500).send({status : false , message : "Model name is not given in path params.(forntEnd error)"})
     if (!listOfAllModel.includes(modelName)) return res.status(500).send({ status: false, message: `Give Model Name(${modelName}) is Invalid.(FrontEnd Error)` }) 
 
 
     // // // All data given in body --->
-    let { feedbackName, feedbackType, feedbackMsg } = req.body
+    let { feedbackName, feedbackType, feedbackMsg , feedFromWebName } = req.body
 
     // // // Feedback Name enrty checks here -->
     if (!isValidEntry(feedbackName)) return res.status(400).send({ status: false, message: `Feedback Name is not given.` })
@@ -75,15 +79,25 @@ module.exports.feedbackController = async function (req, res) {
     req.body.whenCreated = moment().utcOffset("+05:30").format('MMMM Do YY, hh:mm a')
 
 
+    // // // Website Url or site name ------>
+
+    if(!feedFromWebName){
+        req.body.feedFromWebName = modelName
+    }
+
+
     // // // Var to store output of creation -->
     let data = ''
     if (modelName == model1) {
         data = await InternFeedbackModel.create(req.body)
     }
     if (modelName == model2) {
-        data = await nextModel.create(req.body)
+        data = await smallProjectsModel.create(req.body)
     }
     if (modelName == model3) {
+        data = await nextModel.create(req.body)
+    }
+    if (modelName == model4) {
         data = await next2Model.create(req.body)
     }
 
@@ -100,7 +114,7 @@ module.exports.getFeedbackAll = async function(req ,res){
 
     let modelName = req.params.modelName
 
-    let listOfAllModel = [model1, model2, model3]
+    let listOfAllModel = [model1, model2, model3 , model4]
     if (!listOfAllModel.includes(modelName)) return res.status(500).send({ status: false, message: `Give Model Name(${modelName}) is Invalid.(FrontEnd Error)` }) 
 
     let data = ''
@@ -108,9 +122,12 @@ module.exports.getFeedbackAll = async function(req ,res){
         data = await InternFeedbackModel.find().select({feedbackName : 1 , feedbackType : 1 , feedbackMsg : 1 , whenCreated : 1 , reply : 1 , _id : 0 }).sort({createdAt : -1})
     }
     if (modelName == model2) {
-        data = await nextModel.find().select({feedbackName : 1 , feedbackType : 1 , feedbackMsg : 1 , whenCreated : 1 , reply : 1 , _id : 0 }).sort({createdAt : -1})
+        data = await smallProjectsModel.find().select({feedbackName : 1 , feedbackType : 1 , feedbackMsg : 1 , whenCreated : 1 , reply : 1 , _id : 0 }).sort({createdAt : -1})
     }
     if (modelName == model3) {
+        data = await nextModel.find().select({feedbackName : 1 , feedbackType : 1 , feedbackMsg : 1 , whenCreated : 1 , reply : 1 , _id : 0 }).sort({createdAt : -1})
+    }
+    if (modelName == model4) {
         data = await next2Model.find().select({feedbackName : 1 , feedbackType : 1 , feedbackMsg : 1 , whenCreated : 1 , reply : 1 , _id : 0 }).sort({createdAt : -1})
     }
 
