@@ -7,7 +7,7 @@ function globalMWAsCors(req, res, next) {
     let requestUrl =  req.protocol + '://' + req.get('host')
 
     // // // List of all url that deployed and ready to take feedback --->
-    var whitelist = ['https://internscity.onrender.com', 'https://my-todo-zm4b.onrender.com' ]
+    var whitelist = ['https://internscity.onrender.com', 'https://my-todo-zm4b.onrender.com' , "https://feedback-hzwx.onrender.com" ]
 
     if(whitelist.includes(requestUrl)){
         next()
