@@ -9,8 +9,6 @@ app.use(express.json())
  
 app.use(cors())     // // // Making cors polic active
 
-let {globalMWAsCors} = require("./src/Middleware/globalMW")
-app.use(globalMWAsCors)     // // // Check Url is regestered or not
 
 require('dotenv').config()  // // // Access .env file
 
