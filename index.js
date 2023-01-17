@@ -3,12 +3,16 @@ const mongooose = require("mongoose")
 const cors = require('cors')
 
 const route = require("./src/Router/router")
-
 const app = express()
 app.use(express.json())
-app.use(cors())
 
-require('dotenv').config()
+ 
+app.use(cors())     // // // Making cors polic active
+
+let {globalMWAsCors} = require("./src/Middleware/globalMW")
+app.use(globalMWAsCors)     // // // Check Url is regestered or not
+
+require('dotenv').config()  // // // Access .env file
 
 
 mongooose.connect( process.env.Token , {
