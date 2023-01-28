@@ -29,7 +29,7 @@ const feedbackSchema = new mongooose.Schema(
 
     feedbackMsg: { type: String, required: true ,trim : true} ,
 
-    whenCreated : {type : String , default : moment().format('MMMM Do YY, hh:mm a') ,trim : true} ,
+    whenCreated : {type : String ,trim : true} ,
 
     feedFromWebName : {type : String , required : true ,trim : true } , 
 
@@ -76,7 +76,9 @@ module.exports.feedbackController = async function (req, res) {
 
 
     // // // Time according to deployed time zone (utcoffset() is give time acc. to time zone , so we will set is on indian time zone by "+05:30" ) ------------>
-    req.body.whenCreated = moment().utcOffset("+05:30").format('MMMM Do YY, hh:mm a')
+    if(!whenCreated){
+        req.body.whenCreated = moment().utcOffset("+05:30").format('MMMM Do YY, hh:mm a')
+    }
 
 
     // // // Website Url or site name ------>
