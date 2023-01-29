@@ -10,7 +10,7 @@ app.use(express.json())
 app.use(cors())     // // // Making cors polic active
 
 
-require('dotenv').config()  // // // Access .env file
+require('dotenv').config()  // // // Access .env filed
 
 
 mongooose.connect( process.env.Token , {
@@ -34,3 +34,4 @@ const port = process.env.PORT || 3000
 app.listen(port, function () {
     console.log('Express app running on port ' + port)
 });
+

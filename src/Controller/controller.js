@@ -63,7 +63,7 @@ module.exports.feedbackController = async function (req, res) {
 
 
     // // // All data given in body --->
-    let { feedbackName, feedbackType, feedbackMsg , feedFromWebName } = req.body
+    let { feedbackName, feedbackType, feedbackMsg , feedFromWebName , whenCreated } = req.body
 
     // // // Feedback Name enrty checks here -->
     if (!isValidEntry(feedbackName)) return res.status(400).send({ status: false, message: `Feedback Name is not given.` })
@@ -76,9 +76,10 @@ module.exports.feedbackController = async function (req, res) {
 
 
     // // // Time according to deployed time zone (utcoffset() is give time acc. to time zone , so we will set is on indian time zone by "+05:30" ) ------------>
-    if(!whenCreated){
-        req.body.whenCreated = moment().utcOffset("+05:30").format('MMMM Do YY, hh:mm a')
-    }
+
+    // if(!whenCreated){
+    //     req.body.whenCreated = moment().utcOffset("+05:30").format('MMMM Do YY, hh:mm a')
+    // }
 
 
     // // // Website Url or site name ------>
