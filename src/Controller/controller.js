@@ -143,10 +143,6 @@ module.exports.getFeedbackAll = async function(req ,res){
     }
 
 
-    // // // If in data arr not having any feedback -------------->
-    // if(data.length === 0){
-    //     data = "Waiting for First successful feedback"
-    // }
 
     res.status(201).send({ status: true, message: "Fetched successfully", data: data })
    
