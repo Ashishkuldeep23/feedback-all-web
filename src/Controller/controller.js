@@ -15,7 +15,7 @@ function isValidEntry(value) {
 
 const model1 = "intern"
 const model2 = "smallProjectsFeed"
-const model3 = "smallRact1"
+const model3 = "smallReact1"
 const model4 = "next"
 const model5 = "next2"
 
@@ -41,7 +41,7 @@ const feedbackSchema = new mongooose.Schema(
 // // // //<-----------------------** All models with one schema to seprate feedbacks **----------->
 let InternFeedbackModel = mongooose.model(model1, feedbackSchema)
 let smallProjectsModel = mongooose.model(model2, feedbackSchema)
-let smallRact1sModel = mongooose.model(model3, feedbackSchema)
+let smallReact1sModel = mongooose.model(model3, feedbackSchema)
 let nextModel = mongooose.model(model4, feedbackSchema)
 let next2Model = mongooose.model(model5, feedbackSchema)
 
@@ -69,7 +69,11 @@ module.exports.feedbackController = async function (req, res) {
 
     // // // Feedback Name enrty checks here -->
     // // if (!isValidEntry(feedbackName)) return res.status(400).send({ status: false, message: `Feedback Name is not given.` }) // // Now name is Guest By Default. 
-    
+
+    if(!feedbackName){
+        req.body.feedbackName = "Guest"
+    }
+
     if(feedbackName){
         if (!feedbackNameReg.test(feedbackName)) return res.status(400).send({ status: false, message: `Feedback Name is invalid.(${feedbackName})` })
     }
@@ -102,7 +106,7 @@ module.exports.feedbackController = async function (req, res) {
         data = await smallProjectsModel.create(req.body)
     }
     if (modelName == model3) {
-        data = await smallRact1sModel.create(req.body)
+        data = await smallReact1sModel.create(req.body)
     }
     if (modelName == model4) {
         data = await nextModel.create(req.body)
@@ -135,7 +139,7 @@ module.exports.getFeedbackAll = async function(req ,res){
         data = await smallProjectsModel.find().select({feedbackName : 1 , feedbackType : 1 , feedbackMsg : 1 , whenCreated : 1 , reply : 1 , _id : 0 }).sort({createdAt : -1})
     }
     if (modelName == model3) {
-        data = await smallRact1sModel.find().select({feedbackName : 1 , feedbackType : 1 , feedbackMsg : 1 , whenCreated : 1 , reply : 1 , _id : 0 }).sort({createdAt : -1})
+        data = await smallReact1sModel.find().select({feedbackName : 1 , feedbackType : 1 , feedbackMsg : 1 , whenCreated : 1 , reply : 1 , _id : 0 }).sort({createdAt : -1})
     }
     if (modelName == model4) {
         data = await nextModel.find().select({feedbackName : 1 , feedbackType : 1 , feedbackMsg : 1 , whenCreated : 1 , reply : 1 , _id : 0 }).sort({createdAt : -1})
