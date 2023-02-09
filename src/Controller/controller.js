@@ -58,9 +58,9 @@ module.exports.feedbackController = async function (req, res) {
     
     // // // Model entry checks here --->
     let modelName = req.params.modelName
+    if (!modelName) return res.status(500).send({status : false , message : "Model name is not given in path params.(forntEnd error)"})
     
     let listOfAllModel = [model1, model2, model3 ,model4 , model5]
-    if (!modelName) return res.status(500).send({status : false , message : "Model name is not given in path params.(forntEnd error)"})
     if (!listOfAllModel.includes(modelName)) return res.status(500).send({ status: false, message: `Give Model Name(${modelName}) is Invalid.(FrontEnd Error)` }) 
 
 
@@ -69,7 +69,8 @@ module.exports.feedbackController = async function (req, res) {
 
     // // // Feedback Name enrty checks here -->
     // // if (!isValidEntry(feedbackName)) return res.status(400).send({ status: false, message: `Feedback Name is not given.` }) // // Now name is Guest By Default. 
-    if(feedbackName !== ""){
+    
+    if(feedbackName){
         if (!feedbackNameReg.test(feedbackName)) return res.status(400).send({ status: false, message: `Feedback Name is invalid.(${feedbackName})` })
     }
 
