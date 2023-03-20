@@ -16,8 +16,9 @@ function isValidEntry(value) {
 const model1 = "intern"
 const model2 = "smallProjectsFeed"
 const model3 = "smallReact1"
-const model4 = "next"
-const model5 = "next2"
+const model4 = "getFood"
+const model5 = "next"
+const model6 = "next2"
 
 
 // // // <-----------------------** Schema and model here **-------------------->
@@ -42,8 +43,9 @@ const feedbackSchema = new mongooose.Schema(
 let InternFeedbackModel = mongooose.model(model1, feedbackSchema)
 let smallProjectsModel = mongooose.model(model2, feedbackSchema)
 let smallReact1sModel = mongooose.model(model3, feedbackSchema)
-let nextModel = mongooose.model(model4, feedbackSchema)
-let next2Model = mongooose.model(model5, feedbackSchema)
+let getFoodModel = mongooose.model(model4, feedbackSchema)
+let nextModel = mongooose.model(model5, feedbackSchema)
+let next2Model = mongooose.model(model6, feedbackSchema)
 
 
 
@@ -60,7 +62,7 @@ module.exports.feedbackController = async function (req, res) {
     let modelName = req.params.modelName
     if (!modelName) return res.status(500).send({status : false , message : "Model name is not given in path params.(forntEnd error)"})
     
-    let listOfAllModel = [model1, model2, model3 ,model4 , model5]
+    let listOfAllModel = [model1, model2, model3 ,model4 , model5 , model6]
     if (!listOfAllModel.includes(modelName)) return res.status(500).send({ status: false, message: `Give Model Name(${modelName}) is Invalid.(FrontEnd Error)` }) 
 
 
@@ -109,9 +111,12 @@ module.exports.feedbackController = async function (req, res) {
         data = await smallReact1sModel.create(req.body)
     }
     if (modelName == model4) {
-        data = await nextModel.create(req.body)
+        data = await getFoodModel.create(req.body)
     }
     if (modelName == model5) {
+        data = await nextModel.create(req.body)
+    }
+    if (modelName == model6) {
         data = await next2Model.create(req.body)
     }
 
@@ -142,9 +147,12 @@ module.exports.getFeedbackAll = async function(req ,res){
         data = await smallReact1sModel.find().select({feedbackName : 1 , feedbackType : 1 , feedbackMsg : 1 , whenCreated : 1 , reply : 1 , _id : 0 }).sort({createdAt : -1})
     }
     if (modelName == model4) {
-        data = await nextModel.find().select({feedbackName : 1 , feedbackType : 1 , feedbackMsg : 1 , whenCreated : 1 , reply : 1 , _id : 0 }).sort({createdAt : -1})
+        data = await getFoodModel.find().select({feedbackName : 1 , feedbackType : 1 , feedbackMsg : 1 , whenCreated : 1 , reply : 1 , _id : 0 }).sort({createdAt : -1})
     }
     if (modelName == model5) {
+        data = await next2Model.find().select({feedbackName : 1 , feedbackType : 1 , feedbackMsg : 1 , whenCreated : 1 , reply : 1 , _id : 0 }).sort({createdAt : -1})
+    }
+    if (modelName == model6) {
         data = await next2Model.find().select({feedbackName : 1 , feedbackType : 1 , feedbackMsg : 1 , whenCreated : 1 , reply : 1 , _id : 0 }).sort({createdAt : -1})
     }
 
