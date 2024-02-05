@@ -13,9 +13,7 @@ app.use(cors())     // // // Making cors polic active
 require('dotenv').config()  // // // Access .env filed
 
 
-mongooose.connect( process.env.Token , {
-    useNewUrlParser: true
-})
+mongooose.connect( process.env.Token)
 .then( ()=>{console.log("MongoDB Connected")} )
 .catch((e)=>{console.log("Erro :-",e)})
 
