@@ -166,6 +166,10 @@ module.exports.getFeedbackAll = async function (req, res) {
     }
 
 
+    if (data.length <= 0) {
+        return res.status(404).send({ status: false, message: "No feedback found for now. Give first feedback by filling the form." })
+    }
+
 
     res.status(200).send({ status: true, message: "All feedbacks fetched successfully", data: data })
 
